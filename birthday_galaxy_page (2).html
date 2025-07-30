@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Dedeng! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #1a0033, #330066, #4d0080, #6600cc);
+            background-size: 400% 400%;
+            animation: galaxyGradient 8s ease infinite;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        @keyframes galaxyGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 100;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .greeting-text {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #f0932b, #eb4d4b);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 3s linear infinite;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .age-display {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700, 0 0 40px #ffd700;
+            margin: 2rem 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+
+        .message-container {
+            max-width: 700px;
+        }
+
+        .message-title {
+            font-size: 2.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700;
+            margin-bottom: 2rem;
+        }
+
+        .message-text {
+            font-size: 1.4rem;
+            color: white;
+            line-height: 1.8;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .panda-scene {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            position: relative;
+            margin: 2rem auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .sunset-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                #ff6b35 0%, 
+                #ff8c42 25%, 
+                #ffa726 50%, 
+                #ffcc02 75%, 
+                #4a90e2 100%);
+            position: relative;
+        }
+
+        .sun {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #fff700, #ffaa00);
+            border-radius: 50%;
+            position: absolute;
+            right: 60px;
+            top: 50px;
+            box-shadow: 0 0 30px #ffaa00;
+            animation: sunGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sunGlow {
+            from { box-shadow: 0 0 30px #ffaa00; }
+            to { box-shadow: 0 0 50px #ffaa00, 0 0 70px #ff6b35; }
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to bottom, #2d5016, #4a7c59);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .pandas {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+        }
+
+        .panda {
+            width: 60px;
+            height: 80px;
+            position: relative;
+            animation: pandaSway 4s ease-in-out infinite alternate;
+        }
+
+        .panda:nth-child(2) {
+            animation-delay: -2s;
+        }
+
+        @keyframes pandaSway {
+            from { transform: rotate(-2deg); }
+            to { transform: rotate(2deg); }
+        }
+
+        .panda-body {
+            width: 50px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+            border: 3px solid #000;
+        }
+
+        .panda-head {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: -20px;
+            left: 5px;
+            border: 3px solid #000;
+        }
+
+        .panda-ear {
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: -5px;
+        }
+
+        .panda-ear.left { left: 5px; }
+        .panda-ear.right { right: 5px; }
+
+        .panda-eye {
+            width: 8px;
+            height: 8px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 12px;
+        }
+
+        .panda-eye.left { left: 8px; }
+        .panda-eye.right { right: 8px; }
+
+        .panda-nose {
+            width: 4px;
+            height: 3px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 18px;
+            left: 18px;
+        }
+
+        .panda-arms {
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+        }
+
+        .panda-arms.left { left: -8px; }
+        .panda-arms.right { right: -8px; }
+
+        .planets {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            animation: orbit 20s linear infinite;
+        }
+
+        .planet1 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            top: 10%;
+            left: 10%;
+            animation-duration: 15s;
+        }
+
+        .planet2 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            top: 20%;
+            right: 15%;
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+
+        .planet3 {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            bottom: 15%;
+            left: 20%;
+            animation-duration: 18s;
+        }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+        }
+.music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .music-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .music-selector {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            max-width: 250px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .music-selector.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .music-option {
+            display: block;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .music-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .music-option.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-color: #667eea;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .volume-slider {
+            width: 100px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .current-song {
+            color: #ffd700;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            .age-display { font-size: 5rem; }
+            .greeting-text { font-size: 1.5rem; }
+            .message-text { font-size: 1.2rem; }
+            .card { padding: 2rem; margin: 1rem; }
+            .panda-scene { height: 300px; }
+            .action-btn { padding: 15px 30px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="planets">
+        <div class="planet planet1"></div>
+        <div class="planet planet2"></div>
+        <div class="planet planet3"></div>
+    </div>
+
+    <button class="music-toggle" onclick="toggleMusic()" id="musicBtn">🎵</button>
+
+    <div class="container">
+        <!-- Screen 1: Greeting -->
+        <div class="screen active" id="screen1">
+            <div class="card">
+                <div class="greeting-text">
+                    Haloo Dedeng 😍😍<br>
+                    Ada surprise nih buat kamu! ✨
+                </div>
+                <button class="action-btn" onclick="nextScreen()">Buka Kejutan</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Birthday Title -->
+        <div class="screen" id="screen2">
+            <div class="card">
+                <h1 class="main-title">Happy Birthday</h1>
+                <h2 style="font-size: 2.5rem; color: #ffd700; margin-bottom: 1rem; text-shadow: 0 0 10px #ffd700;">DEDENG!</h2>
+                <div class="age-display">16</div>
+                <div style="color: #ffd700; font-size: 1.3rem; margin-bottom: 2rem;">
+                    🌟 Sweet Sixteen! 🌟
+                </div>
+                <button class="action-btn" onclick="nextScreen()">Lanjutkan</button>
+            </div>
+        </div>
+
+        <!-- Screen 3: Messages -->
+        <div class="screen" id="screen3">
+            <div class="card">
+                <div class="message-container">
+                    <h2 class="message-title">🌟 Untuk Sahabat Terbaik 🌟</h2>
+                    
+                    <div class="message-text">
+                        🎂 Selamat ulang tahun yang ke-16, Dedeng! 🎂
+                    </div>
+                    
+                    <div class="message-text">
+                        ✨ Di usia yang baru ini, semoga kamu semakin bersinar seperti bintang-bintang di galaksi ini. ✨
+                    </div>
+                    
+                    <div class="message-text">
+                        🌈 Terima kasih sudah menjadi sahabat yang luar biasa, yang selalu ada dalam suka dan duka. 🌈
+                    </div>
+                    
+                    <div class="message-text">
+                        🚀 Semoga semua impian dan cita-citamu terwujud. Semoga tahun ini membawa kebahagiaan, kesehatan, dan kesuksesan! 🚀
+                    </div>
+                    
+                    <div class="message-text">
+                        💫 Happy Sweet 16, Dedeng! You're amazing! 💫
+                    </div>
+                    
+                    <button class="action-btn" onclick="nextScreen()">Lanjutkan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Panda Scene -->
+        <div class="screen" id="screen4">
+            <div class="card">
+                <h2 style="font-size: 2.5rem; color: #ffd700; text-shadow: 0 0 15px #ffd700; margin-bottom: 2rem;">
+                    Enjoying the Sunset with Friends 🌅
+                </h2>
+                
+                <div class="panda-scene">
+                    <div class="sunset-bg">
+                        <div class="sun"></div>
+                        <div class="ground">
+                            <div class="pandas">
+                                <div class="panda">
+                                    <div class="panda-body">
+                                        <div class="panda-arms left"></div>
+                                        <div class="panda-arms right"></div>
+                                    </div>
+                                    <div class="panda-head">
+                                        <div class="panda-ear left"></div>
+                                        <div class="panda-ear right"></div>
+                                        <div class="panda-eye left"></div>
+                                        <div class="panda-eye right"></div>
+                                        <div class="panda-nose"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="panda">
+                                    <div class="panda-body">
+                                        <div class="panda-arms left"></div>
+                                        <div class="panda-arms right"></div>
+                                    </div>
+                                    <div class="panda-head">
+                                        <div class="panda-ear left"></div>
+                                        <div class="panda-ear right"></div>
+                                        <div class="panda-eye left"></div>
+                                        <div class="panda-eye right"></div>
+                                        <div class="panda-nose"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="color: white; font-size: 1.2rem; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); margin-bottom: 2rem;">
+                    🌅 For You My Beast Friend... 
+                </div>
+                
+                <button class="action-btn" onclick="makeWish()">Make a Wish! 🌠</button>
+                <button class="action-btn" onclick="restart()" style="margin-left: 1rem;">Mulai Lagi ↻</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fireworks" id="fireworks"></div>
+
+    <script>
+        let currentScreen = 1;
+
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Next screen function
+        function nextScreen() {
+            if (currentScreen < 4) {
+                document.getElementById(`screen${currentScreen}`).classList.remove('active');
+                currentScreen++;
+                setTimeout(() => {
+                    document.getElementById(`screen${currentScreen}`).classList.add('active');
+                }, 300);
+            }
+        }
+
+        // Restart function
+        function restart() {
+            document.getElementById(`screen${currentScreen}`).classList.remove('active');
+            currentScreen = 1;
+            setTimeout(() => {
+                document.getElementById('screen1').classList.add('active');
+            }, 300);
+        }
+
+        // Create fireworks
+        function createFireworks() {
+            const fireworksContainer = document.getElementById('fireworks');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#a29bfe'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    
+                    for (let j = 0; j < 10; j++) {
+                        const firework = document.createElement('div');
+                        firework.style.position = 'absolute';
+                        firework.style.width = '4px';
+                        firework.style.height = '4px';
+                        firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        firework.style.borderRadius = '50%';
+                        firework.style.left = x + 'px';
+                        firework.style.top = y + 'px';
+                        
+                        const angle = (j / 10) * Math.PI * 2;
+                        const velocity = 50 + Math.random() * 50;
+                        
+                        firework.animate([
+                            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                            { 
+                                transform: `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px) scale(0)`, 
+                                opacity: 0 
+                            }
+                        ], {
+                            duration: 1000,
+                            easing: 'ease-out'
+                        });
+                        
+                        fireworksContainer.appendChild(firework);
+                        
+                        setTimeout(() => firework.remove(), 1000);
+                    }
+                }, Math.random() * 2000);
+            }
+        }
+
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#a29bfe'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    
+                    confetti.animate([
+                        { transform: 'translateY(-100vh) rotate(0deg)', opacity: 1 },
+                        { transform: 'translateY(100vh) rotate(720deg)', opacity: 0 }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'linear'
+                    });
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, Math.random() * 1000);
+            }
+        }
+
+        // Make a wish function
+        function makeWish() {
+            alert('🌟 Tutup mata dan buat permintaan terbaik! 🌟\n\nSemoga semua impian Dedeng terwujud di usia 16 ini! 🎂✨');
+            createFireworks();
+            createConfetti();
+        }
+
+        // Music toggle
+        let musicPlaying = false;
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            
+            if (musicPlaying) {
+                btn.textContent = '🎵';
+                musicPlaying = false;
+            } else {
+                btn.textContent = '🔇';
+                musicPlaying = true;
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (currentScreen < 4) {
+                    nextScreen();
+                }
+            }
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createStars();
+        });
+    </script>
+</body>
+</html>
